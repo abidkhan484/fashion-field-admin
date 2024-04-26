@@ -1,0 +1,191 @@
+.loader-bg {
+    background-color: rgba(000, 000, 000, 0.2);
+}
+
+.rounded-tl {
+    border-top-left-radius: 5px;
+}
+
+.rounded-bl {
+    border-bottom-left-radius: 5px;
+}
+
+.rounded-tr {
+    border-top-right-radius: 5px;
+}
+
+.rounded-br {
+    border-bottom-right-radius: 5px;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+table tr th, table tr td {
+    text-align: left;
+}
+
+.sub-category .dropBox{
+    width: 100%!important;
+}
+
+
+.button {
+    @apply flex text-sm rounded-md shadow-lg font-Poppins justify-center items-center h-16;
+}
+
+.button-outline-primary {
+    @apply bg-buttonColor border-2 border-buttonColor text-white  hover:bg-buttonHoverColor hover:border-buttonHoverColor focus:outline-none;
+}
+
+.button-primary {
+    @apply border-2 border-buttonColor bg-buttonColor text-white focus:outline-none hover:bg-buttonHoverColor hover:border-buttonHoverColor;
+}
+
+.button-success {
+    @apply border-2 border-green-500 bg-green-500 text-white hover:bg-green-700 hover:border-green-700 active:bg-green-900 focus:outline-none;
+}
+
+.button-danger {
+    @apply border-2 border-red-500 bg-red-500 text-white hover:bg-red-700 hover:border-red-700 active:bg-red-700 focus:outline-none;
+}
+
+.button-rounded-primary {
+    @apply w-8 h-8 shadow rounded-full border-2 border-buttonColor bg-buttonColor text-white hover:bg-buttonHoverColor hover:border-buttonHoverColor active:bg-buttonColor leading-3 mx-2 focus:outline-none font-Poppins font-normal text-sm;
+}
+
+.button-rounded-default {
+    @apply text-gray-500 mx-2 leading-3 focus:ring focus:outline-none;
+}
+
+.button-rounded-default-outline {
+    @apply w-8 h-8 shadow rounded-full border-2 border-gray-500 text-gray-500 hover:text-gray-700 hover:border-gray-700 mx-2 leading-3 focus:ring focus:outline-none;
+}
+
+.page-heading {
+    @apply w-full mb-6 flex justify-between items-center;
+}
+
+.page-heading-title {
+    @apply text-2xl font-bold text-gray-800 font-Poppins;
+}
+
+.text-success {
+    @apply text-pink-500 bg-white shadow px-6 py-4 w-36;
+}
+
+.card {
+    @apply bg-white w-full shadow-md p-6 rounded-md;
+}
+
+.card-header {
+    @apply mb-2 pb-2 flex flex-col md:flex-row justify-between items-start md:items-end;
+}
+
+.card-header-title {
+    @apply text-2xl font-bold text-gray-800;
+}
+
+.card-header-subtitle {
+    @apply text-sm text-gray-400 mb-1;
+}
+
+.card-body {
+    @apply pb-4 pt-2 px-4;
+}
+
+.card-footer {
+    @apply mt-6 py-3;
+}
+
+.form-label {
+    @apply w-full text-gray-500 text-lg;
+}
+
+.form-control {
+    @apply w-full mt-3 text-gray-900 border-2 border-gray-700 rounded-3xl font-semibold focus:border-purple-500 disabled:opacity-50 shadow;
+}
+
+.form-textarea {
+    @apply w-full mt-3 px-2 py-1 text-gray-900 border-2 border-gray-700 rounded-lg focus:border-purple-500 disabled:opacity-50 shadow;
+}
+
+/* Argha */
+
+.pageHeading{
+    @apply font-Poppins font-medium text-base text-pageHeading
+}
+
+.buttonText{
+    @apply font-Poppins font-normal text-sm text-white
+}
+
+.inputBox{
+    @apply border-1 border-gray-200 focus:outline-none focus:border-borderColor px-4 py-2 w-80 font-Poppins font-normal text-xs2 
+}
+
+.tableHeader{
+    @apply font-Poppins font-semibold text-xs text-tableHeading
+}
+
+.tableData{
+    @apply font-Poppins text-xs font-normal text-tableData
+}
+
+.createFormCard{
+    @apply bg-white w-full shadow-md pl-8 pr-16 pt-8 pb-8 rounded-md;
+}
+
+.createFromInputLabel{
+    @apply font-Poppins font-normal text-xs text-pageHeading
+}
+
+.createFromInputField{
+    @apply border-1 border-gray-200 focus:outline-none focus:border-borderColor px-4 py-2 w-full font-Poppins font-normal text-xs2
+}
+
+.activeButtonView{
+    @apply text-xs font-semibold font-Poppins bg-green-400 text-white px-3 py-1 rounded-full
+}
+
+.deActiveButtonView{
+    @apply text-xs font-semibold font-Poppins bg-red-400 text-white px-3 py-1 rounded-full 
+}
+
+.selectTag input:focus{
+    --tw-ring-shadow: unset!important;
+}
+
+.react-tagsinput--focused{
+    border: 1px solid #377dff!important;
+}
+
+.react-tagsinput input:focus {
+    --tw-ring-shadow: unset!important;
+}
+
+.react-tagsinput-input {
+    font-size: 12px!important;
+    width: 110px!important;
+    font-family: 'Poppins', sans-serif!important ;
+    color: #252525!important;
+}
+
+.react-tagsinput-tag {
+    background-color: #138496!important;
+    border: 1px solid #25bcf1!important;
+    color: white!important;
+    font-size: 12px!important;
+    font-family: 'Poppins', sans-serif!important ;
+}
+
+.ql-container{
+    height: 200px!important;
+    font-family: 'Poppins', sans-serif!important ;
+}
+
+.ql-editor::before{
+    font-family: 'Poppins', sans-serif!important ;
+}

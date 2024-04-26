@@ -1,0 +1,182 @@
+import { Link, Switch, Route, useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
+import { useSelector, useDispatch } from "react-redux"
+
+import Moment from 'react-moment';
+import 'moment-timezone';
+
+import Pagination from 'core/Pagination';
+
+import { LoaderContext } from "context/LoaderContext"
+import { permission } from 'helper/permission';
+
+export default function Suppliers() {
+
+    const [supplierData, setSupplierData] = useState(null)
+    const { loading, setLoading } = React.useContext(LoaderContext);
+    const [search, setSearch] = useState(null)
+    const { token, user } = useSelector(state => state.auth)
+    // console.log(token)
+
+    let history = useHistory();
+
+    React.useEffect(() => {
+        if(user?.permissions)
+        {
+            if(!(permission(user.permissions, 'supplier_management', 'access')) && (user.user_type_id != 1))
+                history.push('/admin');
+        }
+    }, [user])
+
+    useEffect(() => {
+        if (token != null && token != "") {
+            // console.log(token)
+            setLoading(true);
+            axios.get("/suppliers", { headers: { Authorization: token } })
+                .then(response => {
+                    setSupplierData(response.data)
+
+                    setLoading(false);
+                })
+                .catch(errors => {
+                    console.log(errors)
+                })
+        }
+    }, [token])
+
+    const updatePage = (url) => {
+        setLoading(true);
+        axios.get(url, {
+            headers: {
+                Authorization: token
+            }
+        }).then(response => {
+            setSupplierData(response.data)
+            setLoading(false);
+        })
+    }
+
+    useEffect(() => {
+        if (search != null) {
+            axios.get(`/suppliers/search?terms=${search}`, { headers: { Authorization: token } })
+                .then(response => {
+                    console.log(response)
+                    setSupplierData(response.data)
+                })
+                .catch(errors => {
+                    console.log(errors)
+                })
+        }
+    }, [search])
+
+    useEffect(() => {
+        console.log(search)
+    }, [search])
+
+    return (
+        <>
+            <div className="px-8 mt-8 mb-8">
+                <div className="page-heading">
+                    <h1 className="pageHeading">All Suppliers</h1>
+                    <div className="flex">
+                        
+                        {user?.permissions && (permission(user.permissions, 'supplier_management', 'create') || (user.user_type_id == 1)) ? (                            
+                        <Link to="/admin/suppliers/create" className="button button-outline-primary w-48">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                            </svg>
+                            <span className="ml-2 buttonText">Add a New Supplier</span>
+                        </Link>
+                        ) : ''}
+                    </div>
+                </div>
+                <div className="card">
+                    <div className="border-b">
+                        <div className="card-header">
+                            <div>
+                                <h4 className="pageHeading">Suppliers</h4>
+                            </div>
+                            <input className="inputBox" placeholder="Search" onChange={e => setSearch(e.target.value)} />
+                        </div>
+                    </div>
+                    <div className="card-body overflow-x-auto">
+                        <table className="w-350 2xl:w-full table-fixed">
+                            <thead>
+                                <tr className="border-b h-12">
+                                    <th className="tableHeader w-2/7">Store</th>
+                                    <th className="tableHeader w-1/7">Mobile</th>
+                                    <th className="tableHeader w-2/7">Email</th>
+                                    <th className="tableHeader w-1/7">Date</th>
+                                    <th className="tableHeader w-1/7">Status</th>
+                                    <th className="tableHeader w-1/7">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {supplierData?.data?.map((item, index) => (
+                                    <tr className="border-b py-4 h-20" key={index}>
+                                        <td>
+                                            <div className="flex items-center">
+                                                {(item.store?.logo) ? (
+                                                    <>
+                                                        <img className="w-10 h-auto" alt="..."
+                                                            src={item.store.logo}
+                                                        />
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <span className="w-10 h-10 bg-gray-200 rounded-full"></span>
+                                                    </>
+                                                )}
+
+                                                <div className="ml-2">
+                                                    <h3 className="tableData">{item?.store?.name}</h3>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p className="tableData">{item.mobile}</p>
+                                        </td>
+                                        <td>
+                                            <p className="tableData">{item.email}</p>
+                                        </td>
+                                        <td>
+                                            <p className="tableData"><Moment format="MMM, D YYYY">{item.created_at}</Moment></p>
+                                        </td>
+                                        <td>
+                                            {/* <Status status={item.store?.status} /> */}
+                                            {
+                                                item.store?.status == 1 ? <span className="activeButtonView">Active</span> : <span className="deActiveButtonView">Deactive</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            
+                                            {user?.permissions && (permission(user.permissions, 'supplier_management', 'update') || (user.user_type_id == 1)) ? (                            
+                                                <Link to={`/admin/suppliers/${item.id}/edit`} className="focus:outline-none">
+                                                    {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z" />
+                                                    </svg> */}
+                                                    <i class="fas fa-pen"></i>
+                                                </Link>
+                                                ) : ''}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="card-footer">
+                        <div className="flex flex-col justify-between md:flex-row items-center w-full">
+                            {supplierData && <p className="font-Poppins font-normal text-sm">Showing <b>{supplierData.from}-{supplierData.to}</b> from <b>{supplierData.total}</b> data</p>}
+                            {/* <p>Showing <b>{supplierData.from}-{supplierData.to}</b> from <b>{supplierData.total}</b> data</p> */}
+
+                            <div className="flex items-center">
+                                {supplierData && <Pagination sellers={supplierData} setUpdate={updatePage} />}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
