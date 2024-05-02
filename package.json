@@ -3,6 +3,7 @@
     "version": "1.1.0",
     "description": "Notus React - A free Tailwind CSS and React UI Kit and Admin by Creative Tim.",
     "repository": "https://github.com/creativetimofficial/notus-react",
+    "homepage": "https://abidkhan484.github.io/fashion-field-admin",
     "license": "MIT",
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^31.1.0",
@@ -19,6 +20,7 @@
         "chart.js": "^3.6.2",
         "collect.js": "^4.29.3",
         "faker": "^5.5.3",
+        "gh-pages": "^6.1.1",
         "gulp": "4.0.2",
         "gulp-append-prepend": "1.0.8",
         "moment": "^2.29.1",
@@ -51,6 +53,8 @@
         "build": "craco build",
         "test": "craco test",
         "eject": "react-scripts eject",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
         "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run build:tailwind && npm start",
         "build:tailwind": "tailwind build src/assets/styles/index.css -o src/assets/styles/tailwind.css"
     },
